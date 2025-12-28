@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlterHome — Спокойствие под ключ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. Глобальные настройки (CSS Variables) --- */
+        :root {
+            --primary: #1F1F1F; 
+            --accent: #B08D55; /* Наше золото */
+            --bg-light: #FFFFFF;
+            --bg-grey: #F4F4F4;
+            --text-grey: #555555;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--primary);
+            line-height: 1.7;
+            background-color: var(--bg-light);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Типографика заголовков */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        h2 { font-size: 36px; letter-spacing: -0.5px; }
+        p { margin-bottom: 20px; font-weight: 300; font-size: 16px; }
+        a { text-decoration: none; color: inherit; transition: 0.3s ease; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Золотой заголовок по центру */
+        .section-title-gold {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 2. Header (Меню) --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: transparent;
+            z-index: 999;
+            padding: 30px 40px;
+            transition: padding 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        header.scrolled { padding: 15px 40px; background-color: rgba(255,255,255,0.02); backdrop-filter: blur(5px); }
+        
+        .header-wrap { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .logo-img { max-height: 90px; width: auto; display: block; transition: 0.3s; }
+        header.scrolled .logo-img { max-height: 70px; }
+
+        nav ul { display: flex; gap: 30px; }
+        nav a, .cta-link {
+            font-family: 'Montserrat', sans-serif; font-size: 14px; text-transform: uppercase;
+            letter-spacing: 1px; font-weight: 700; color: #fff; cursor: pointer;
+            background: none; border: none; padding: 0; transition: color 0.3s ease;
+            white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        nav a:hover, .cta-link:hover { color: var(--accent) !important; }
+        header.scrolled nav a, header.scrolled .cta-link { color: var(--primary); text-shadow: none; }
+        
+        @media (max-width: 1200px) { nav { display: none; } }
+
+        /* --- 3. Hero Section (Слайдер) --- */
+        .hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; overflow: hidden; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%); z-index: 1; pointer-events: none; }
+        .slideshow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        
+        .slide-img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; opacity: 0; transform: scale(1); 
+            animation: imageAnimation 9s linear infinite; 
+            will-change: transform, opacity; 
+        }
+        .slide-img:nth-child(1) { animation-delay: 0s; } 
+        .slide-img:nth-child(2) { animation-delay: 3s; } 
+        .slide-img:nth-child(3) { animation-delay: 6s; }
+        
+        @keyframes imageAnimation { 
+            0% { opacity: 0; transform: scale(1); animation-timing-function: ease-in; }
+            5% { opacity: 1; } 33% { opacity: 1; transform: scale(1.05); } 
+            38% { opacity: 0; transform: scale(1.08); } 100% { opacity: 0; transform: scale(1); }
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 900px; opacity: 0; animation: contentFadeIn 1.5s ease-out forwards 0.5s; }
+        @keyframes contentFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hero h1 { font-size: 64px; font-weight: 500; margin-bottom: 30px; letter-spacing: -1px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .hero p { font-size: 18px; margin: 0 auto 50px; font-weight: 300; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        
+        .hero .btn { background-color: #fff; color: var(--primary); border: none; padding: 20px 50px; font-size: 14px; font-weight: 600; }
+        .hero .btn:hover { background-color: var(--accent); color: #fff; }
+
+        /* --- 4. Общие стили блоков --- */
+        section { padding: 120px 0; }
+        section.hero { padding: 0; }
+        section.full-width-section { padding: 80px 0 0; }
+
+        /* Кнопки */
+        .btn { display: inline-block; padding: 18px 40px; background-color: var(--primary); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid var(--primary); cursor: pointer; transition: all 0.3s ease; }
+        .btn:hover { background-color: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-outline:hover { background-color: var(--primary); color: #fff; }
+
+        /* О нас */
+        .about-wrap { display: flex; align-items: center; gap: 80px; }
+        .about-text { flex: 0.8; }
+        .about-img { flex: 1.2; position: relative; }
+        .about-img img { width: 100%; height: auto; display: block; box-shadow: 20px 20px 0px var(--bg-grey); }
+        .gold-quote { color: var(--accent); font-size: 20px; font-weight: 600; margin-top: 20px; display: block; line-height: 1.5; }
+
+        /* Преимущества (Карточки) */
+        .advantages { background-color: var(--bg-grey); }
+        .adv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .adv-item { background: #fff; padding: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .adv-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .adv-inner { border: 1px solid var(--accent); height: 100%; display: flex; flex-direction: column; }
+        .adv-item img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border-bottom: 1px solid var(--accent); }
+        .adv-content { padding: 20px 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; }
+        .adv-item h3 { font-size: 16px; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .adv-item p { font-size: 13px; color: var(--text-grey); margin-bottom: 0; line-height: 1.5; }
+
+        /* Процесс (Цепочка) */
+        .process-wrap { display: flex; justify-content: space-between; gap: 20px; counter-reset: step; }
+        .process-item { flex: 1; position: relative; text-align: center; padding: 20px; }
+        .process-item:not(:last-child)::after { content: '→'; position: absolute; top: 40px; right: -15px; font-size: 30px; color: #ddd; font-family: 'Open Sans', sans-serif; font-weight: 300; }
+        .process-item::before { counter-increment: step; content: "0" counter(step); font-size: 60px; font-family: 'Montserrat', sans-serif; font-weight: 700; color: rgba(176, 141, 85, 0.2); display: block; margin-bottom: -20px; line-height: 1; }
+        .process-item h3 { font-size: 20px; margin-bottom: 15px; color: var(--accent); font-weight: 700; position: relative; }
+        .process-item p { font-size: 16px; color: #333; line-height: 1.6; }
+
+        /* Цены (Карточки) */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .price-card { background: #fff; padding: 15px; text-align: center; transition: 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .price-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .price-card.recommended { box-shadow: 0 10px 30px rgba(176, 141, 85, 0.2); }
+        .price-inner { border: 1px solid var(--accent); height: 100%; padding: 40px 30px; display: flex; flex-direction: column; justify-content: space-between; }
+        .price-card h4 { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .price-val { font-size: 48px; font-family: 'Montserrat', sans-serif; color: var(--accent); font-weight: 600; margin: 20px 0; }
+        .price-val span { font-size: 16px; color: #999; }
+        .price-list { text-align: left; margin: 30px 0; }
+        .price-list li { margin-bottom: 12px; padding-left: 20px; position: relative; font-size: 15px; color: var(--text-grey); }
+        .price-list li::before { content: '•'; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+
+        /* --- 5. Новые Секции --- */
+
+        /* РЕАЛИЗОВАННЫЕ ПРОЕКТЫ (На весь экран 3 в ряд) */
+        .portfolio-full-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+            gap: 0; 
+        }
+        .portfolio-item {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .portfolio-item:hover img { transform: scale(1.1); }
+        
+        .portfolio-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); opacity: 0; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 600; text-transform: uppercase; text-align: center; padding: 20px;
+        }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+        /* РАБОЧИЙ ПРОЕКТ (Карусель - Contain) */
+        .carousel-wrap { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
+        
+        .carousel-slide { 
+            min-width: 100%; 
+            height: 550px; 
+            background-color: #f9f9f9; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .carousel-btn { 
+            position: absolute; top: 50%; transform: translateY(-50%); 
+            background: rgba(255,255,255,0.8); border: none; width: 50px; height: 50px; 
+            border-radius: 50%; cursor: pointer; z-index: 10; font-size: 24px; 
+            color: var(--primary); display: flex; align-items: center; justify-content: center; 
+            transition: 0.3s; 
+        }
+        .carousel-btn:hover { background: #fff; color: var(--accent); }
+        .prev-btn { left: 20px; } .next-btn { right: 20px; }
+
+        /* ПЛАНИРОВКИ (На весь экран 4 в ряд) */
+        .layouts-grid { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; gap: 0; }
+        .layout-item { height: 350px; position: relative; overflow: hidden; cursor: pointer; border-right: 1px solid rgba(255,255,255,0.2); }
+        .layout-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .layout-item:hover img { transform: scale(1.05); }
+
+        /* СТИЛЬ ДЛЯ НАДПИСЕЙ ПЛАНИРОВОК (Белая подложка) */
+        .layouts-grid .portfolio-overlay {
+            background: rgba(255, 255, 255, 0.95); 
+            color: #000; /* ЧЕРНЫЙ ТЕКСТ */
+            font-weight: 800; 
+            text-shadow: none; 
+        }
+        .layout-item:hover .portfolio-overlay { opacity: 1; }
+
+        /* --- 6. Lightbox & Footer & Modal --- */
+        
+        .lightbox { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
+        .lightbox-img { max-width: 100%; max-height: 90vh; display: block; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .lb-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; z-index: 3001; }
+        .lb-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 50px; cursor: pointer; padding: 20px; user-select: none; transition: 0.3s; }
+        .lb-arrow:hover { color: var(--accent); }
+        .lb-prev { left: 20px; } .lb-next { right: 20px; }
+
+        /* Footer (ЗОЛОТОЙ ФОН) */
+        footer { 
+            background-color: var(--accent); /* ЗОЛОТОЙ */
+            color: #000; /* ЧЕРНЫЙ ТЕКСТ */
+            padding: 80px 0 30px; 
+            border-top: none;
+        }
+        
+        .footer-flex { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            flex-wrap: wrap; 
+            gap: 40px; 
+        }
+        
+        .footer-left { flex: 1; min-width: 250px; }
+        .footer-logo-large { max-height: 140px; width: auto; display: block; }
+
+        .footer-center { 
+            flex: 1; min-width: 250px; 
+            display: flex; align-items: center; justify-content: center; 
+            text-align: center; height: 140px; 
+        }
+        .footer-slogan { font-size: 18px; color: #000; font-weight: 400; }
+
+        .footer-right { flex: 1; min-width: 250px; text-align: right; }
+
+        /* ССЫЛКИ В ФУТЕРЕ - БЕЛЫЕ */
+        .gold-link { color: #fff !important; font-weight: 600; text-decoration: none; font-size: 16px; }
+        .gold-link:hover { color: #000 !important; }
+        
+        .footer-links p { color: #000; margin-bottom: 20px; font-weight: 700; text-transform: uppercase; }
+        .footer-links a { display: block; margin-bottom: 12px; }
+
+        .copyright { margin-top: 60px; text-align: center; font-size: 14px; color: #000; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px; }
+        .copyright div { opacity: 0.8; }
+        
+        .dev-link { color: #fff; font-weight: 800; text-decoration: none; }
+        .dev-link:hover { color: #000; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content { background-color: #fff; padding: 50px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.3); text-align: center; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: 300; color: #aaa; cursor: pointer; transition: 0.2s; }
+        .close-btn:hover { color: var(--primary); }
+        .form-group input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; font-family: 'Open Sans', sans-serif; font-size: 14px; box-sizing: border-box; }
+        .form-group input:focus { outline: none; border-color: var(--accent); }
+        .modal .btn { width: 100%; border: none; }
+
+        /* --- Адаптив --- */
+        @media (max-width: 1024px) {
+            #about h2 { white-space: normal; }
+            .adv-grid { grid-template-columns: repeat(2, 1fr); }
+            .portfolio-full-grid { grid-template-columns: repeat(2, 1fr); }
+            .layouts-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-flex { flex-direction: column; text-align: center; align-items: center; }
+            .footer-right { text-align: center; }
+            .footer-center { height: auto; margin: 20px 0; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; background-color: rgba(0,0,0,0.5); }
+            header.scrolled { padding: 15px 20px; background-color: #fff; }
+            .logo-img { max-height: 50px; }
+            h1 { font-size: 36px; } h2 { font-size: 28px; }
+            .about-wrap { flex-direction: column; gap: 40px; }
+            .modal-content { padding: 30px 20px; width: 90%; }
+            .hero-content { padding: 0 20px; }
+            .adv-grid { grid-template-columns: 1fr; }
+            .portfolio-full-grid { grid-template-columns: 1fr; }
+            .layouts-grid { grid-template-columns: 1fr; }
+            .carousel-slide { height: 350px; }
+            .process-wrap { flex-direction: column; }
+            .process-item:not(:last-child)::after { content: '↓'; top: auto; bottom: -30px; right: 50%; transform: translateX(50%); }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="header-wrap">
+            <a href="#">
+                <img src="logo.png" alt="AlterHome" class="logo-img">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#process">Процесс</a></li>
+                    <li><a href="#portfolio">Портфолио</a></li>
+                    <li><a href="#working-project">Рабочий проект</a></li>
+                    <li><a href="#layouts">Планировки</a></li>
+                </ul>
+            </nav>
+            <button class="cta-link" onclick="openModal()">Обсудить проект</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="overlay"></div>
+        <div class="slideshow">
+            <img src="img/home/slide-1.jpg" class="slide-img" alt="Интерьер 1">
+            <img src="img/home/slide-2.jpg" class="slide-img" alt="Интерьер 2">
+            <img src="img/home/slide-3.jpg" class="slide-img" alt="Интерьер 3">
+        </div>
+        <div class="container hero-content">
+            <h1>Спокойствие под ключ</h1>
+            <p>Комплексное сопровождение после покупки квартиры. <br>Дизайн, ремонт, подбор материалов и узаконивание перепланировки.</p>
+            <button class="btn" onclick="openModal()">Рассчитать стоимость</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 60px; white-space: nowrap;">Одна ответственность — один результат</h2>
+            <div class="about-wrap">
+                <div class="about-text">
+                    <p>Вам больше не нужно искать разных подрядчиков, сводить прораба с дизайнером и переживать за сроки. AlterHome берет на себя весь цикл работ: от бетонных стен до декорирования готового интерьера.</p>
+                    <p class="gold-quote">Мы не просто рисуем картинки, мы строим дома для жизни.</p>
+                </div>
+                <div class="about-img">
+                    <img src="img/home/about-main.jpg" alt="Интерьер AlterHome">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <div class="adv-grid">
+                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-remote.jpg" alt="Удаленный контроль"><div class="adv-content"><h3>Удаленный контроль</h3><p>Купили квартиру в Москве, но живете в другом регионе? Мы станем вашими глазами. Все вопросы решаем онлайн.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-report.jpg" alt="Прозрачность"><div class="adv-content"><h3>Прозрачность</h3><p>Еженедельные фото и видеоотчеты. Вы всегда в курсе реального прогресса, без приукрашиваний.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-legal.jpg" alt="Узаконивание"><div class="adv-content"><h3>Узаконивание</h3><p>Создаем планировки, которые можно согласовать. Берем бюрократию на себя. Юридически чистая квартира.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-guarantee.jpg" alt="Гарантия"><div class="adv-content"><h3>Гарантия 2 года</h3><p>Официальный договор на все виды работ. Мы уверены в качестве и несем полную ответственность.</p></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 60px;">Как мы работаем</h2>
+            <div class="process-wrap">
+                <div class="process-item"><h3>Знакомство</h3><p>Встреча на объекте или видеоконференция. Обсуждаем желания, цели, бюджет и сроки.</p></div>
+                <div class="process-item"><h3>Дизайн-проект</h3><p>Замер, проработка планировок, визуализации и чертежи.</p></div>
+                <div class="process-item"><h3>Перепланировка</h3><p>Самый важный технический этап. Согласовываем изменения в инстанциях.</p></div>
+                <div class="process-item"><h3>Ремонт</h3><p>Составляем смету, подписываем договор, завозим бригады. Ведем авторский надзор.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="container">
+            <h2 class="section-title-gold">Стоимость дизайн-проекта</h2>
+            <p style="text-align: center; margin-bottom: 50px;">Выберите пакет, который подходит именно вам</p>
+            <div class="pricing-grid">
+                <div class="price-card"><div class="price-inner"><div><h4>Чертежи</h4><div class="price-val">2 500 ₽<span>/м²</span></div><ul class="price-list"><li>Планировочное решение</li><li>Все необходимые чертежи</li></ul></div><button class="btn-outline btn" onclick="openModal()">Выбрать</button></div></div>
+                <div class="price-card"><div class="price-inner"><div><h4>Чертежи + Визуал</h4><div class="price-val">4 000 ₽<span>/м²</span></div><ul class="price-list"><li>Планировочное решение</li><li>Все необходимые чертежи</li><li>3D Визуализации</li></ul></div><button class="btn-outline btn" onclick="openModal()">Выбрать</button></div></div>
+                <div class="price-card recommended"><div class="price-inner"><div><h4>Комплексный</h4><div class="price-val">6 000 ₽<span>/м²</span></div><ul class="price-list"><li>Планировочное решение</li><li>Все необходимые чертежи</li><li>3D Визуализации</li><li><strong>Подбор материалов</strong></li><li><strong>Комплектация объекта</strong></li></ul></div><button class="btn btn" onclick="openModal()">Выбрать</button></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="full-width-section">
+        <h2 class="section-title-gold">Реализованные проекты</h2>
+        <div class="portfolio-full-grid">
+            <div class="portfolio-item" onclick="openLightbox(0)">
+                <img src="img/portfolio/project1/project1-1.jpg" alt="Проект 1">
+                <div class="portfolio-overlay">ЖК Тушино -2018 - 1</div>
+            </div>
+            <div class="portfolio-item" onclick="openLightbox(1)">
+                <img src="img/portfolio/project2/project2-1.jpg" alt="Проект 2">
+                <div class="portfolio-overlay">ЖК Тушино -2018 - 2</div>
+            </div>
+            <div class="portfolio-item" onclick="openLightbox(2)">
+                <img src="img/portfolio/project3/project3-1.jpg" alt="Проект 3">
+                <div class="portfolio-overlay">ЖК Тушино -2018 - 3</div>
+            </div>
+            <div class="portfolio-item" onclick="openLightbox(3)">
+                <img src="img/portfolio/project4/project4-1.jpg" alt="Проект 4">
+                <div class="portfolio-overlay">ЖК Крылья</div>
+            </div>
+            <div class="portfolio-item" onclick="openLightbox(4)">
+                <img src="img/portfolio/project5/project5-1.jpg" alt="Проект 5">
+                <div class="portfolio-overlay">Зеленоград</div>
+            </div>
+            <div class="portfolio-item" onclick="openLightbox(5)">
+                <img src="img/portfolio/project6/project6-1.jpg" alt="Проект 6">
+                <div class="portfolio-overlay">ЖК Петровский Парк</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="working-project">
+        <div class="container">
+            <h2 class="section-title-gold">Рабочий проект</h2>
+            <div class="carousel-wrap">
+                <button class="carousel-btn prev-btn" onclick="moveCarousel(-1)">&#10094;</button>
+                <div class="carousel-track" id="track"></div> <button class="carousel-btn next-btn" onclick="moveCarousel(1)">&#10095;</button>
+            </div>
+            <div style="text-align: center; margin-top: 10px; color: #999; font-size: 12px;">
+                <span id="current-slide-num">1</span> / 57
+            </div>
+        </div>
+    </section>
+
+    <section id="layouts" class="full-width-section">
+        <h2 class="section-title-gold">Примеры планировок</h2>
+        <div class="layouts-grid">
+            <div class="layout-item" onclick="openLayoutGallery(0)">
+                <img src="img/layouts/layout1/layout1-1.jpg" alt="ЖК Молодёжный">
+                <div class="portfolio-overlay">ЖК Молодёжный</div>
+            </div>
+            <div class="layout-item" onclick="openLayoutGallery(1)">
+                <img src="img/layouts/layout2/layout2-1.jpg" alt="ЖК Петровский Парк">
+                <div class="portfolio-overlay">ЖК Петровский Парк</div>
+            </div>
+            <div class="layout-item" onclick="openLayoutGallery(2)">
+                <img src="img/layouts/layout3/layout3-1.jpg" alt="ЖК Тушино -2018">
+                <div class="portfolio-overlay">ЖК Тушино -2018</div>
+            </div>
+            <div class="layout-item" onclick="openLayoutGallery(3)">
+                <img src="img/layouts/layout4/layout4-1.jpg" alt="Зеленоград">
+                <div class="portfolio-overlay">Зеленоград</div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacts">
+        <div class="container">
+            <div class="footer-flex">
+                <div class="footer-left">
+                    <img src="logo.png" alt="AlterHome" class="footer-logo-large">
+                </div>
+                <div class="footer-center">
+                    <p class="footer-slogan">Давайте создадим ваш идеальный дом</p>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-links">
+                        <p>Контакты</p>
+                        <a href="tel:+79858716563" class="gold-link">+7 985 871 65 63</a>
+                        <a href="mailto:alter-home@mail.ru" class="gold-link">alter-home@mail.ru</a>
+                        <a href="https://t.me/AmelinaEvgenia" class="gold-link">Telegram: @AmelinaEvgenia</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div>© 2025 <a href="https://by-alex.ru" target="_blank" class="dev-link">by AL☰X</a></div>
+                <div style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Все права защищены.</div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3>Обсудить проект</h3>
+            <p>Оставьте свои контакты, и Евгения свяжется с вами.</p>
+            <form>
+                <div class="form-group"><input type="text" placeholder="Ваше имя" required></div>
+                <div class="form-group"><input type="tel" placeholder="Телефон" required></div>
+                <button type="submit" class="btn">Отправить заявку</button>
+            </form>
+            <p style="font-size: 10px; margin-top: 15px; color: #999;">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.</p>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lb-close" onclick="closeLightbox()">&times;</span>
+        <span class="lb-arrow lb-prev" onclick="changeLightSlide(-1)">&#10094;</span>
+        <div class="lightbox-content">
+            <img id="lb-image" src="" alt="Gallery Image" class="lightbox-img">
+        </div>
+        <span class="lb-arrow lb-next" onclick="changeLightSlide(1)">&#10095;</span>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var header = document.getElementById('main-header');
+            if (window.scrollY > 50) { header.classList.add('scrolled'); } 
+            else { header.classList.remove('scrolled'); }
+        });
+
+        function openModal() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "flex"; 
+            setTimeout(function() { modal.classList.add("show"); }, 10); 
+        }
+        function closeModal() {
+            var modal = document.getElementById("modal");
+            modal.classList.remove("show");
+            setTimeout(function() { modal.style.display = "none"; }, 300); 
+        }
+
+        const track = document.getElementById('track');
+        if (track) {
+            const totalWorkSlides = 57;
+            for (let i = 1; i <= totalWorkSlides; i++) {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'carousel-slide';
+                const img = document.createElement('img');
+                img.src = `img/working/work-${i}.jpg`; 
+                img.alt = `Рабочий процесс ${i}`;
+                slideDiv.appendChild(img);
+                track.appendChild(slideDiv);
+            }
+        }
+
+        let currentSlide = 0;
+        function moveCarousel(direction) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const total = slides.length;
+            if (total === 0) return;
+            
+            const counter = document.getElementById('current-slide-num');
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = total - 1;
+            if (currentSlide >= total) currentSlide = 0;
+            
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            if(counter) counter.innerText = currentSlide + 1;
+        }
+
+        const portfolioData = [];
+        for (let p = 1; p <= 6; p++) {
+            let images = [];
+            for (let i = 1; i <= 7; i++) {
+                images.push(`img/portfolio/project${p}/project${p}-${i}.jpg`);
+            }
+            portfolioData.push(images);
+        }
+
+        const layoutsData = [];
+        for (let l = 1; l <= 4; l++) {
+            let images = [];
+            for (let i = 1; i <= 5; i++) {
+                images.push(`img/layouts/layout${l}/layout${l}-${i}.jpg`);
+            }
+            layoutsData.push(images);
+        }
+
+        let activeGalleryImages = [];
+        let currentImageIndex = 0;
+
+        function openLightbox(projectIndex) {
+            activeGalleryImages = portfolioData[projectIndex];
+            currentImageIndex = 0; 
+            showLightbox();
+        }
+
+        function openLayoutGallery(layoutIndex) {
+            activeGalleryImages = layoutsData[layoutIndex];
+            currentImageIndex = 0;
+            showLightbox();
+        }
+
+        function showLightbox() {
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function changeLightSlide(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = activeGalleryImages.length - 1;
+            if (currentImageIndex >= activeGalleryImages.length) currentImageIndex = 0;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const imgUrl = activeGalleryImages[currentImageIndex];
+            document.getElementById('lb-image').src = imgUrl;
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("modal");
+            if (event.target == modal) { closeModal(); }
+            var lightbox = document.getElementById("lightbox");
+            if (event.target == lightbox) { closeLightbox(); }
+        }
+    </script>
+
+</body>
+</html>
