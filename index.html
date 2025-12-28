@@ -94,6 +94,7 @@
         .slide-img { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; opacity: 0; transform: scale(1); 
+            /* 3 картинки * 3 секунды = 9 секунд цикл */
             animation: imageAnimation 9s linear infinite; 
             will-change: transform, opacity; 
         }
@@ -345,9 +346,9 @@
     <section class="hero">
         <div class="overlay"></div>
         <div class="slideshow">
-            <img src="img/home/slide-1.jpg" class="slide-img" alt="Интерьер 1">
-            <img src="img/home/slide-2.jpg" class="slide-img" alt="Интерьер 2">
-            <img src="img/home/slide-3.jpg" class="slide-img" alt="Интерьер 3">
+            <img src="home/slide-1.jpg" class="slide-img" alt="Интерьер 1">
+            <img src="home/slide-2.jpg" class="slide-img" alt="Интерьер 2">
+            <img src="home/slide-3.jpg" class="slide-img" alt="Интерьер 3">
         </div>
         <div class="container hero-content">
             <h1>Спокойствие под ключ</h1>
@@ -365,7 +366,7 @@
                     <p class="gold-quote">Мы не просто рисуем картинки, мы строим дома для жизни.</p>
                 </div>
                 <div class="about-img">
-                    <img src="img/home/about-main.jpg" alt="Интерьер AlterHome">
+                    <img src="home/about-main.jpg" alt="Интерьер AlterHome">
                 </div>
             </div>
         </div>
@@ -374,10 +375,10 @@
     <section id="advantages" class="advantages">
         <div class="container">
             <div class="adv-grid">
-                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-remote.jpg" alt="Удаленный контроль"><div class="adv-content"><h3>Удаленный контроль</h3><p>Купили квартиру в Москве, но живете в другом регионе? Мы станем вашими глазами. Все вопросы решаем онлайн.</p></div></div></div>
-                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-report.jpg" alt="Прозрачность"><div class="adv-content"><h3>Прозрачность</h3><p>Еженедельные фото и видеоотчеты. Вы всегда в курсе реального прогресса, без приукрашиваний.</p></div></div></div>
-                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-legal.jpg" alt="Узаконивание"><div class="adv-content"><h3>Узаконивание</h3><p>Создаем планировки, которые можно согласовать. Берем бюрократию на себя. Юридически чистая квартира.</p></div></div></div>
-                <div class="adv-item"><div class="adv-inner"><img src="img/home/adv-guarantee.jpg" alt="Гарантия"><div class="adv-content"><h3>Гарантия 2 года</h3><p>Официальный договор на все виды работ. Мы уверены в качестве и несем полную ответственность.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="home/adv-remote.jpg" alt="Удаленный контроль"><div class="adv-content"><h3>Удаленный контроль</h3><p>Купили квартиру в Москве, но живете в другом регионе? Мы станем вашими глазами. Все вопросы решаем онлайн.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="home/adv-report.jpg" alt="Прозрачность"><div class="adv-content"><h3>Прозрачность</h3><p>Еженедельные фото и видеоотчеты. Вы всегда в курсе реального прогресса, без приукрашиваний.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="home/adv-legal.jpg" alt="Узаконивание"><div class="adv-content"><h3>Узаконивание</h3><p>Создаем планировки, которые можно согласовать. Берем бюрократию на себя. Юридически чистая квартира.</p></div></div></div>
+                <div class="adv-item"><div class="adv-inner"><img src="home/adv-guarantee.jpg" alt="Гарантия"><div class="adv-content"><h3>Гарантия 2 года</h3><p>Официальный договор на все виды работ. Мы уверены в качестве и несем полную ответственность.</p></div></div></div>
             </div>
         </div>
     </section>
@@ -410,27 +411,27 @@
         <h2 class="section-title-gold">Реализованные проекты</h2>
         <div class="portfolio-full-grid">
             <div class="portfolio-item" onclick="openLightbox(0)">
-                <img src="img/portfolio/project1/project1-1.jpg" alt="Проект 1">
+                <img src="portfolio/project1/project1-1.jpg" alt="Проект 1">
                 <div class="portfolio-overlay">ЖК Тушино -2018 - 1</div>
             </div>
             <div class="portfolio-item" onclick="openLightbox(1)">
-                <img src="img/portfolio/project2/project2-1.jpg" alt="Проект 2">
+                <img src="portfolio/project2/project2-1.jpg" alt="Проект 2">
                 <div class="portfolio-overlay">ЖК Тушино -2018 - 2</div>
             </div>
             <div class="portfolio-item" onclick="openLightbox(2)">
-                <img src="img/portfolio/project3/project3-1.jpg" alt="Проект 3">
+                <img src="portfolio/project3/project3-1.jpg" alt="Проект 3">
                 <div class="portfolio-overlay">ЖК Тушино -2018 - 3</div>
             </div>
             <div class="portfolio-item" onclick="openLightbox(3)">
-                <img src="img/portfolio/project4/project4-1.jpg" alt="Проект 4">
+                <img src="portfolio/project4/project4-1.jpg" alt="Проект 4">
                 <div class="portfolio-overlay">ЖК Крылья</div>
             </div>
             <div class="portfolio-item" onclick="openLightbox(4)">
-                <img src="img/portfolio/project5/project5-1.jpg" alt="Проект 5">
+                <img src="portfolio/project5/project5-1.jpg" alt="Проект 5">
                 <div class="portfolio-overlay">Зеленоград</div>
             </div>
             <div class="portfolio-item" onclick="openLightbox(5)">
-                <img src="img/portfolio/project6/project6-1.jpg" alt="Проект 6">
+                <img src="portfolio/project6/project6-1.jpg" alt="Проект 6">
                 <div class="portfolio-overlay">ЖК Петровский Парк</div>
             </div>
         </div>
@@ -453,19 +454,19 @@
         <h2 class="section-title-gold">Примеры планировок</h2>
         <div class="layouts-grid">
             <div class="layout-item" onclick="openLayoutGallery(0)">
-                <img src="img/layouts/layout1/layout1-1.jpg" alt="ЖК Молодёжный">
+                <img src="layouts/layout1/layout1-1.jpg" alt="ЖК Молодёжный">
                 <div class="portfolio-overlay">ЖК Молодёжный</div>
             </div>
             <div class="layout-item" onclick="openLayoutGallery(1)">
-                <img src="img/layouts/layout2/layout2-1.jpg" alt="ЖК Петровский Парк">
+                <img src="layouts/layout2/layout2-1.jpg" alt="ЖК Петровский Парк">
                 <div class="portfolio-overlay">ЖК Петровский Парк</div>
             </div>
             <div class="layout-item" onclick="openLayoutGallery(2)">
-                <img src="img/layouts/layout3/layout3-1.jpg" alt="ЖК Тушино -2018">
+                <img src="layouts/layout3/layout3-1.jpg" alt="ЖК Тушино -2018">
                 <div class="portfolio-overlay">ЖК Тушино -2018</div>
             </div>
             <div class="layout-item" onclick="openLayoutGallery(3)">
-                <img src="img/layouts/layout4/layout4-1.jpg" alt="Зеленоград">
+                <img src="layouts/layout4/layout4-1.jpg" alt="Зеленоград">
                 <div class="portfolio-overlay">Зеленоград</div>
             </div>
         </div>
@@ -537,6 +538,7 @@
             setTimeout(function() { modal.style.display = "none"; }, 300); 
         }
 
+        // --- ГЕНЕРАЦИЯ СЛАЙДОВ ДЛЯ РАБОЧЕГО ПРОЕКТА (57 фото) ---
         const track = document.getElementById('track');
         if (track) {
             const totalWorkSlides = 57;
@@ -544,7 +546,8 @@
                 const slideDiv = document.createElement('div');
                 slideDiv.className = 'carousel-slide';
                 const img = document.createElement('img');
-                img.src = `img/working/work-${i}.jpg`; 
+                // УБРАЛ img/ из пути
+                img.src = `working/work-${i}.jpg`; 
                 img.alt = `Рабочий процесс ${i}`;
                 slideDiv.appendChild(img);
                 track.appendChild(slideDiv);
@@ -566,11 +569,13 @@
             if(counter) counter.innerText = currentSlide + 1;
         }
 
+        // --- ДАННЫЕ ДЛЯ ГАЛЕРЕЙ (LIGHTBOX) ---
         const portfolioData = [];
         for (let p = 1; p <= 6; p++) {
             let images = [];
             for (let i = 1; i <= 7; i++) {
-                images.push(`img/portfolio/project${p}/project${p}-${i}.jpg`);
+                // УБРАЛ img/ из пути
+                images.push(`portfolio/project${p}/project${p}-${i}.jpg`);
             }
             portfolioData.push(images);
         }
@@ -579,7 +584,8 @@
         for (let l = 1; l <= 4; l++) {
             let images = [];
             for (let i = 1; i <= 5; i++) {
-                images.push(`img/layouts/layout${l}/layout${l}-${i}.jpg`);
+                // УБРАЛ img/ из пути
+                images.push(`layouts/layout${l}/layout${l}-${i}.jpg`);
             }
             layoutsData.push(images);
         }
