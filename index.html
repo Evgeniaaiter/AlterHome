@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlterHome — Спокойствие под ключ</title>
+    <meta name="description" content="Комплексное сопровождение ремонта после покупки квартиры: дизайн, перепланировка, комплектация и авторский надзор.">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#b08d55">
+    <meta name="msapplication-TileColor" content="#b08d55">
+    <meta name="theme-color" content="#b08d55">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AlterHome">
+    <meta property="og:title" content="AlterHome — Спокойствие под ключ">
+    <meta property="og:description" content="Дизайн, ремонт, перепланировка и комплектация. Мы берем на себя все заботы, вы наслаждаетесь результатом.">
+    
+    <meta property="og:url" content="https://alter-home.ru/">
+    <meta property="og:image" content="https://alter-home.ru/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <style>
         /* --- 1. Глобальные настройки (CSS Variables) --- */
@@ -546,7 +566,7 @@
                 const slideDiv = document.createElement('div');
                 slideDiv.className = 'carousel-slide';
                 const img = document.createElement('img');
-                // УБРАЛ img/ из пути
+                // ПУТЬ СОХРАНЕН КАК ВЫ ПРОСИЛИ (БЕЗ img/)
                 img.src = `working/work-${i}.jpg`; 
                 img.alt = `Рабочий процесс ${i}`;
                 slideDiv.appendChild(img);
@@ -574,7 +594,7 @@
         for (let p = 1; p <= 6; p++) {
             let images = [];
             for (let i = 1; i <= 7; i++) {
-                // УБРАЛ img/ из пути
+                // ПУТЬ СОХРАНЕН КАК ВЫ ПРОСИЛИ (БЕЗ img/)
                 images.push(`portfolio/project${p}/project${p}-${i}.jpg`);
             }
             portfolioData.push(images);
@@ -584,7 +604,7 @@
         for (let l = 1; l <= 4; l++) {
             let images = [];
             for (let i = 1; i <= 5; i++) {
-                // УБРАЛ img/ из пути
+                // ПУТЬ СОХРАНЕН КАК ВЫ ПРОСИЛИ (БЕЗ img/)
                 images.push(`layouts/layout${l}/layout${l}-${i}.jpg`);
             }
             layoutsData.push(images);
